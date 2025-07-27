@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Регистрация - Finance Tracker{% endblock %}
+
+{% block header %}Регистрация{% endblock %}
+
+{% block content %}
+<form id="register-form">
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+    
+    <div>
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password" required>
+        <small>Минимум 8 символов, должен содержать буквы и цифры</small>
+    </div>
+    
+    <div>
+        <button type="submit">Зарегистрироваться</button>
+    </div>
+</form>
+
+<p>
+    Уже есть аккаунт? <a href="/auth/login">Войти</a>
+</p>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/register.js"></script>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Дашборд - Finance Tracker{% endblock %}
+
+{% block header %}Личный кабинет{% endblock %}
+
+{% block content %}
+<div>
+    <button id="logout-btn">Выйти</button>
+</div>
+
+<h2>Ваши счета</h2>
+<p>Здесь будет список ваших банковских счетов</p>
+
+<h2>Последние транзакции</h2>
+<p>Здесь будет история транзакций</p>
+
+<div>
+    <button>Добавить счет</button>
+    <button>Загрузить выписку</button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/dashboard.js"></script>
+{% endblock %}
