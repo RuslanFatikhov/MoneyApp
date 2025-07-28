@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}Создание счета - Finance Tracker{% endblock %}
+
+{% block header %}Создание нового счета{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <form id="create-account-form">
+        <div class="form-group">
+            <label for="name">Название счета:</label>
+            <input type="text" id="name" name="name" required 
+                   placeholder="Например: Основной счет Kaspi">
+        </div>
+        
+        <div class="form-group">
+            <label for="type">Тип счета:</label>
+            <select id="type" name="type" required>
+                <option value="">Выберите тип</option>
+                <option value="checking">Расчетный счет</option>
+                <option value="savings">Сберегательный</option>
+                <option value="credit">Кредитная карта</option>
+                <option value="deposit">Депозит</option>
+                <option value="investment">Инвестиционный</option>
+                <option value="cash">Наличные</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="bank_id">Банк:</label>
+            <select id="bank_id" name="bank_id">
+                <option value="">Выберите банк</option>
+                {% for bank in banks %}
+                <option value="{{ bank.id }}" data-color="{{ bank.color }}">
+                    {{ bank.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="currency">Валюта:</label>
+            <select id="currency" name="currency" required>
+                <option value="">Выберите валюту</option>
+                {% for currency in currencies %}
+                <option value="{{ currency.code }}" 
+                        {% if currency.default %}selected{% endif %}>
+                    {{ currency.symbol }} {{ currency.name }} ({{ currency.code }})
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="initial_balance">Начальный баланс:</label>
+            <input type="number" id="initial_balance" name="initial_balance" 
+                   value="0" step="0.01" min="0">
+            <small>Укажите текущий баланс на счете</small>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit">Создать счет</button>
+            <button type="button" onclick="window.history.back()">Отмена</button>
+        </div>
+    </form>
+</div>
+
+<style>
+.form-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.form-group small {
+    color: #666;
+    font-size: 14px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.form-actions button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.form-actions button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.form-actions button[type="button"] {
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+.form-actions button:hover {
+    opacity: 0.9;
+}
+
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/create_account.js"></script>
+{% endblock %}

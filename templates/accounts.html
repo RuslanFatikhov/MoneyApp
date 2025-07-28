@@ -1,0 +1,357 @@
+{% extends "base.html" %}
+
+{% block title %}Мои счета - Finance Tracker{% endblock %}
+
+{% block header %}Мои счета{% endblock %}
+
+{% block content %}
+<div class="accounts-container">
+    <div class="accounts-header">
+        <h2>Управление счетами</h2>
+        <div class="header-actions">
+            <button id="toggle-archived-btn" class="btn-secondary">
+                Показать архивированные
+            </button>
+            <a href="/accounts/create" class="btn-primary">Добавить счет</a>
+        </div>
+    </div>
+
+    <div id="accounts-loading" class="loading-spinner" style="display: none;">
+        Загрузка счетов...
+    </div>
+
+    <div id="accounts-list" class="accounts-grid">
+        <!-- Счета будут загружены через JavaScript -->
+    </div>
+
+    <div id="no-accounts" class="no-accounts" style="display: none;">
+        <h3>У вас пока нет счетов</h3>
+        <p>Создайте первый счет для начала учета финансов</p>
+        <a href="/accounts/create" class="btn-primary">Создать первый счет</a>
+    </div>
+</div>
+
+<!-- Модальное окно редактирования -->
+<div id="edit-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Редактирование счета</h3>
+            <button class="modal-close">&times;</button>
+        </div>
+        <form id="edit-account-form">
+            <input type="hidden" id="edit-account-id">
+            
+            <div class="form-group">
+                <label for="edit-name">Название:</label>
+                <input type="text" id="edit-name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="edit-type">Тип:</label>
+                <select id="edit-type" required>
+                    <option value="checking">Расчетный счет</option>
+                    <option value="savings">Сберегательный</option>
+                    <option value="credit">Кредитная карта</option>
+                    <option value="deposit">Депозит</option>
+                    <option value="investment">Инвестиционный</option>
+                    <option value="cash">Наличные</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="edit-bank">Банк:</label>
+                <select id="edit-bank">
+                    <option value="">Выберите банк</option>
+                </select>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Сохранить</button>
+                <button type="button" class="btn-secondary modal-close">Отмена</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+.accounts-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.accounts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+    display: inline-block;
+}
+
+.btn-primary {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #45a049;
+}
+
+.btn-secondary {
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background-color: #e1e1e1;
+}
+
+.accounts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.account-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: box-shadow 0.2s;
+}
+
+.account-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.account-card.archived {
+    opacity: 0.6;
+    border-left: 4px solid #ff9800;
+}
+
+.account-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.account-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+}
+
+.bank-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-left: 10px;
+}
+
+.account-type {
+    color: #666;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.account-balance {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2e7d32;
+    margin: 10px 0;
+}
+
+.account-balance.negative {
+    color: #d32f2f;
+}
+
+.account-currency {
+    color: #666;
+    font-size: 14px;
+}
+
+.account-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.account-actions button {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.btn-edit {
+    background-color: #2196F3;
+    color: white;
+}
+
+.btn-archive {
+    background-color: #ff9800;
+    color: white;
+}
+
+.btn-restore {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-transactions {
+    background-color: #9C27B0;
+    color: white;
+}
+
+.loading-spinner {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+.no-accounts {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+}
+
+.no-accounts h3 {
+    margin-bottom: 10px;
+}
+
+.no-accounts p {
+    margin-bottom: 30px;
+}
+
+/* Модальное окно */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 8px;
+    padding: 0;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-header h3 {
+    margin: 0;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+.modal-close:hover {
+    color: #333;
+}
+
+#edit-account-form {
+    padding: 20px;
+}
+
+#edit-account-form .form-group {
+    margin-bottom: 20px;
+}
+
+#edit-account-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#edit-account-form input,
+#edit-account-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.form-actions button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .accounts-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .header-actions {
+        justify-content: center;
+    }
+    
+    .accounts-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/accounts.js"></script>
+{% endblock %}

@@ -1,0 +1,10 @@
+{
+  "banks": [
+    {
+      "id": "kaspi",
+      "name": "Kaspi Bank",
+      "country": "KZ",
+      "color": "#F44336"
+    }
+  ]
+}

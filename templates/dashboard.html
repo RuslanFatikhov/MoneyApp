@@ -1,24 +1,44 @@
 {% extends "base.html" %}
 
-{% block title %}Дашборд - Finance Tracker{% endblock %}
+{% block title %}Главная{% endblock %}
 
-{% block header %}Личный кабинет{% endblock %}
+{% block header %}{% endblock %}
 
 {% block content %}
-<div>
-    <button id="logout-btn">Выйти</button>
+<div class="dashboard-container">
+
+            <!--<button id="logout-btn" class="btn-logout">Выйти</button-->
+
+    </div>
+
+
+    <div class="dashboard-grid">
+        <!-- Краткая сводка счетов -->
+        <div class="dashboard-card">
+
+            
+            <h3>Ваши счета</h3>
+            <div id="accounts-summary" class="accounts-summary">
+                <div class="loading-text">Загрузка...</div>
+            </div>
+
+
+            <div class="card-actions">
+                <a href="/accounts/create" class="btn-primary">Добавить счет</a>
+                <a href="/accounts" class="btn-secondary">Все счета</a>
+            </div>
+        </div>
+
+
+
+        
+
+        
+    </div>
+
+
 </div>
 
-<h2>Ваши счета</h2>
-<p>Здесь будет список ваших банковских счетов</p>
-
-<h2>Последние транзакции</h2>
-<p>Здесь будет история транзакций</p>
-
-<div>
-    <button>Добавить счет</button>
-    <button>Загрузить выписку</button>
-</div>
 {% endblock %}
 
 {% block scripts %}

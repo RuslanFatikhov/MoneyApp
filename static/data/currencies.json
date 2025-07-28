@@ -1,0 +1,55 @@
+{
+  "currencies": [
+    {
+      "code": "KZT",
+      "name": "Казахстанский тенге",
+      "symbol": "₸",
+      "default": true
+    },
+    {
+      "code": "USD",
+      "name": "Доллар США",
+      "symbol": "$"
+    },
+    {
+      "code": "EUR",
+      "name": "Евро",
+      "symbol": "€"
+    },
+    {
+      "code": "RUB",
+      "name": "Российский рубль",
+      "symbol": "₽"
+    },
+    {
+      "code": "CNY",
+      "name": "Китайский юань",
+      "symbol": "¥"
+    },
+    {
+      "code": "GBP",
+      "name": "Британский фунт",
+      "symbol": "£"
+    },
+    {
+      "code": "JPY",
+      "name": "Японская иена",
+      "symbol": "¥"
+    },
+    {
+      "code": "CHF",
+      "name": "Швейцарский франк",
+      "symbol": "₣"
+    },
+    {
+      "code": "CAD",
+      "name": "Канадский доллар",
+      "symbol": "C$"
+    },
+    {
+      "code": "AUD",
+      "name": "Австралийский доллар",
+      "symbol": "A$"
+    }
+  ]
+}
