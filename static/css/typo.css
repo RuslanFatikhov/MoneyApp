@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+
+h1,h2,h3,h4,h5,h6,p,a {
+    font-family: 'Inter', sans-serif;
+}
+
+h1{
+    font-size: 3em;
+    line-height: 100%;
+    letter-spacing: -5%;
+}
+
+
+p{
+    font-size: 16px;
+    line-height: 18px;
+    letter-spacing: 0px;
+}
+
+.fw700{font-weight: 700;}
+.fw600{font-weight: 600;}
+.fw500{font-weight: 500;}
+.fw400{font-weight: 400;}
+.fw300{font-weight: 300;}

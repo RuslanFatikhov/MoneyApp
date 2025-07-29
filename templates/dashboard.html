@@ -1,46 +1,62 @@
 {% extends "base.html" %}
-
 {% block title %}Главная{% endblock %}
-
 {% block header %}{% endblock %}
-
 {% block content %}
 <div class="dashboard-container">
+<!--<button id="logout-btn" class="btn-logout">Выйти</button-->
+</div>
+<div class="dashboard-grid">
+    <!-- TOTAL VALUE карточка -->
+    <div class="dashboard-card total-value-card">
+        <p class="primary100">TOTAL VALUE</p>
 
-            <!--<button id="logout-btn" class="btn-logout">Выйти</button-->
+        <!--Valye-->
+        <div class="total-value-content">
 
-    </div>
+            <!--Selector-->
+            <div class="currency-selector">
 
 
-    <div class="dashboard-grid">
-        <!-- Краткая сводка счетов -->
-        <div class="dashboard-card">
+                <!--Buttons-->
+                <button id="currency-btn" class="currency-btn" title="Изменить валюту">
+                    <p class="primary100" id="currency-symbol">$</p>
+                </button>
 
-            
-            <h3>Ваши счета</h3>
-            <div id="accounts-summary" class="accounts-summary">
+                <!--Dropdown-->
+                <div id="currency-dropdown" class="currency-dropdown hidden">
+                    <div class="currency-search">
+                        <input type="text" id="currency-search" placeholder="Поиск валюты...">
+                    </div>
+                    <div id="currency-list" class="currency-list">
+                        <div class="loading-text">Загрузка валют...</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!--Loading-->
+            <div id="total-value-amount" class="total-value-amount">
                 <div class="loading-text">Загрузка...</div>
             </div>
 
-
-            <div class="card-actions">
-                <a href="/accounts/create" class="btn-primary">Добавить счет</a>
-                <a href="/accounts" class="btn-secondary">Все счета</a>
-            </div>
+            
         </div>
-
-
-
-        
-
-        
     </div>
 
-
+    <!-- Краткая сводка счетов -->
+    <div class="dashboard-card">
+        <h3>Ваши счета</h3>
+        <div id="accounts-summary" class="accounts-summary">
+            <div class="loading-text">Загрузка...</div>
+        </div>
+        <div class="card-actions">
+            <a href="/accounts/create" class="btn-primary">Добавить счет</a>
+            <a href="/accounts" class="btn-secondary">Все счета</a>
+        </div>
+    </div>
 </div>
-
+</div>
 {% endblock %}
-
 {% block scripts %}
 <script src="/static/js/dashboard.js"></script>
 {% endblock %}

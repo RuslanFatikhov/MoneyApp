@@ -3,16 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block description %}Персональный трекер финансов для управления доходами и расходами{% endblock %}">
     <title>{% block title %}Finance Tracker{% endblock %}</title>
+    
+    <!-- CSS файлы (только существующие) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/colors.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/typo.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    
+    <!-- Дополнительные стили для конкретных страниц -->
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <h1>{% block header %}Finance Tracker{% endblock %}</h1>
+    <header class="main-header">
+        <h1>{% block header %}Finance Tracker{% endblock %}</h1>
+        {% block navigation %}{% endblock %}
+    </header>
+
+    <main class="main-content bg0">
+        <!-- Сообщения об ошибках и успехе -->
+        <div id="messages-container">
+            <div id="error-message" class="message error hidden"></div>
+            <div id="success-message" class="message success hidden"></div>
+        </div>
+
+        {% block content %}{% endblock %}
+    </main>
+
     
-    <div id="error-message"></div>
-    <div id="success-message"></div>
-    
-    {% block content %}{% endblock %}
-    
+
+    <!-- JavaScript файлы (если есть) -->
     {% block scripts %}{% endblock %}
 </body>
 </html>

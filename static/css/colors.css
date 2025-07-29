@@ -1,0 +1,17 @@
+:root {
+    
+    --white100: #F7F7F7;
+    --white200: #fff;
+    --white300: #CDCDCD;
+
+
+    --black005: rgba(0, 0, 0, 0.05);
+    --black100: #121212;
+
+    --accent100: #F4FA9F;
+    
+}
+
+
+.bg0{background-color: var(--white200);}
+.primary100{ color: var(--black100);}

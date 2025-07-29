@@ -1,0 +1,16 @@
+body{
+    box-sizing: border-box;
+}
+
+button{
+    border: none;
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+
+.main-content{
+    padding: 16px;
+}
